@@ -76,3 +76,43 @@ value == value; // false
 value != value; // true
 ```
 
+## overflow (桁あふれ) ##
+値がその方で表現できる範囲を超えること。日本語では桁あふれや範囲超過と呼ぶ。
+一般的な 32 ビット int の最大値は以下。
+```text
+2147483647
+```
+これを超える計算をするとオーバーフローが発生する。 c++ では符号付整数のオーバーフローは未定義動作。
+
+## strtol の挙動 ##
+```c++
+#include <cstdlib>
+long std::strtol(
+    const char* str,
+    char** endptr,
+    int base
+);
+```
+str: 変換したい文字列
+endptr: 変換が終了した位置を受け取る
+base: 何進数として解釈するか。
+## c_str の挙動 ##
+```c++
+std::string str = "12345"
+const char* ptr = str.c_str();
+```
+std::string の内容を C 言語形式の文字列(ヌル終端文字列) として参照するための関数
+
+## std::fixed << std::setprecision(1) ##
+小数点以下を必ず 1 桁表示するということを表す。
+std::fixed は浮動小数点数を固定小数点表記で表す。
+std::setprecision は入出力ストリームで浮動小数点型の桁数を指定出来るマニピュレータです。
+
+
+> fixed で小数点以下だよと教えてあげる。 setprecision で小数点以下の長さを指定してあげる。
+
+<https://qiita.com/ryupim/items/1cbeb860d4a2f056358a>
+
+## std::floor の挙動 ##
+浮動小数点数をその値以下で最大の整数値へ切下げる関数。
+<cmath> が必要

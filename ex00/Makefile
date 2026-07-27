@@ -6,16 +6,16 @@
 #    By: tamatsuu <tamatsuu@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/25 00:33:24 by tamatsuu          #+#    #+#              #
-#    Updated: 2026/07/25 00:33:24 by tamatsuu         ###   ########.fr        #
+#    Updated: 2026/07/28 07:26:40 by tamatsuu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = a.out
+NAME = convert
 CC = c++
 INCLUDES = -I ./
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 SRCS    =   main.cpp \
-			Bureaucrat.cpp 
+			ScalarConverter.cpp 
 OBJS    = $(SRCS:.cpp=.o)
 LIBDIR  = 
 LIBS    = 
