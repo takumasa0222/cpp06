@@ -116,3 +116,42 @@ std::setprecision は入出力ストリームで浮動小数点型の桁数を�
 ## std::floor の挙動 ##
 浮動小数点数をその値以下で最大の整数値へ切下げる関数。
 <cmath> が必要
+
+## static member 関数 ##
+インスタンスに属して動作するわけではなく、クラスそのものに属する関数。
+通常のメンバ関数には暗黙的に this ポインターがわたされる。
+概念的には下記のように扱っている。
+```cpp
+void setValue(Sample* this, int n)
+{
+    this->value = n;
+}
+```
+static メンバー関数はインスタンスから呼ぶことはできる場、インスタンスを使っているわけではない。
+
+## uintptr_t ##
+ポインターの値を格納できる符号なし整数型
+#include <cstdint>　を使用する必要がある。
+
+## cast 型の違い ##
+- reinterpret_cast: 無条件のキャスト。内容保証なし
+- static_cast: ダウンキャスト用(親から子)で使用できる際はこれを使う。実行時コストなし。変換元と先のクラスが親と子の関係でなければコンパイルエラーが発生する。
+- dynamic_cast: 実行時に型チェックをする場合。こちらもダウンキャスト用。実行時に実際に意図したクラスかどうかを判定してそうであれば変換し、異なる場合は nullptr を返す。仮想関数を持っている必要がある。
+
+```cpp
+class Base1 {protected: virtual ~Base1(){} int x;}
+class Base2 {protected: virtual ~Base2(){} int y;}
+class Derived : public Base1, public Base2 {protected: virtual ~Derived(){}};
+
+Derived* d = new Derived();
+printf("d=%p\n", d); // d = 0x14yyyyyy
+
+Base2* b2 = d; //アップキャスト
+printf("b2=%p\n", b2); //b2 = 0x14xxxxxxx <- Base1 のメンバ変数分調整される。
+Derived* d2 = static_cast<Derived*>(b2);
+printf("d2=%p\n", d2); // d = 0x14yyyyyy <- d (もとのポインタ)に復元される。
+
+Derived* d3 = reinterpret_cast<Derived*>(b2);
+printf("d3=%p\n", d3); // d = 0x14xxxxxxx <- d (もとのポインタ)に復元されない。オフセットがずれたままになる。
+```
+<https://tyfkda.github.io/blog/2022/10/05/cpp-cast.html>
