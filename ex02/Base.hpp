@@ -1,10 +1,14 @@
-#ifndef C_HPP
-#define C_HPP
+#ifndef BASE_HPP
+#define BASE_HPP
 #include "Base.hpp"
 
-class C : public Base{
+class Base{
 public: 
-    virtual ~C(){}
+    virtual ~Base(){}
 };
+
+Base *generate(void);
+void identify(Base *p);
+void identify(Base &p);
 
 #endif
